@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useTopData from '../../utils/hooks/useTopData';
 
 function StockTable() {
     const topGainers = useTopData();
+    const [displayCount, setDisplayCount] = useState(10);
+
+    const handleShowMore = () => {
+        setDisplayCount(topGainers.length);
+    };
 
     return (
         <div className="col-span-full xl:col-span-8 bg-white shadow-lg rounded-sm border border-slate-200">
@@ -20,16 +25,22 @@ function StockTable() {
                             </tr>
                         </thead>
                         <tbody className="text-sm font-medium divide-y divide-slate-100">
-                            {topGainers.map(gainer => (
+                            {topGainers.slice(0, displayCount).map(gainer => (
                                 <tr key={gainer.symbol}>
                                     <td className="p-2">{gainer.symbol}</td>
-                                    <td className="p-2 text-center">{gainer.price}</td>
-                                    <td className="p-2 text-center">{gainer.change} ({(gainer.changesPercentage).toFixed(2)}%)</td>
+                                    <td className="p-2 text-center">{gainer.price.toFixed(2)}</td>
+                                    <td className="p-2 text-center">
+                                        <span className={gainer.change > 0 ? 'text-green-500' : gainer.change < 0 ? 'text-red-500' : ''}>                                            {gainer.change.toFixed(2)} ({(gainer.changesPercentage).toFixed(2)}%)
+                                        </span>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
+                {topGainers.length > displayCount && (
+                    <button onClick={handleShowMore}>Show More</button>
+                )}
             </div>
         </div>
     );

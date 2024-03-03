@@ -5,7 +5,7 @@ import Search from '../components/Search';
 import Header from '../partials/Header';
 import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
 
-import GainerTable from '../partials/dashboard/GainerTable';
+import StockTable from '../partials/dashboard/StockTable';
 
 import Banner from '../partials/Banner';
 
@@ -35,7 +35,7 @@ function Dashboard() {
             <Search />
 
             {/* Cards */}
-            <GainerTable />
+            <StockTable />
 
           </div>
         </main>
