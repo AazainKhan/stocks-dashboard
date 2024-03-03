@@ -1,5 +1,5 @@
 const fetchData = (ticker, setData, shortDescription) => {
-  fetch(`http://localhost:5555/${ticker}`)
+  fetch(`http://localhost:5000/${ticker}`)
     .then((res) => res.json())
     .then((data) => {
       setData(data);

@@ -1,5 +1,5 @@
 const fetchHistoricalData = (ticker, priceSeries) => {
-  fetch(`http://localhost:5555/historical/${ticker}`)
+  fetch(`http://localhost:5000/historical/${ticker}`)
     .then((res) => res.json())
     .then((data) => {
       const next = data.map((item) => {

@@ -11,7 +11,12 @@ df = pd.read_html(
 df = df[['Symbol', 'Security']]
 
 companies = [{'value': df['Symbol'][x], 'label': df['Security'][x]}
-            for x in range(len(df))]
+             for x in range(len(df))]
+
+
+@app.route('/companies')
+def companyList():
+    return companies, {'Access-Control-Allow-Origin': '*'}
 
 
 @app.route('/top-gainers')
@@ -72,7 +77,7 @@ def history(ticker):
 
     response = make_response([x for x in zip(  # a list of tuples, where each tuple contains a timestamp and the corresponding closing price for the stock on that date.
         timestamps, historical_prices["Close"])])
-    response.headers.add('Access-Control-Allow-Origin','*')
+    response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
 

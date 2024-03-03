@@ -1,8 +1,8 @@
-const fetchCompanyList = (companies) => {
-  fetch(`http://localhost:5555/companies`)
+const fetchCompanyList = () => {
+  return fetch(`http://localhost:5000/companies`)
     .then((res) => res.json())
     .then((data) => {
-      companies.current = data;
+      return data;
     });
 };
 
