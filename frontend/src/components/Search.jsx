@@ -31,12 +31,12 @@ function Search({ setData, setTicker }) {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 {searchTerm && (
-                    <div className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg">
+                    <div className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg dark:bg-gray-700">
                         {filteredCompanies.map((company) => (
                             <div 
                                 key={company.value} 
                                 onClick={() => setSelectedCompany(company.value)}
-                                className="cursor-pointer p-4 hover:bg-gray-200"
+                                className="cursor-pointer p-4 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-600"
                             >
                                 {company.label}
                             </div>

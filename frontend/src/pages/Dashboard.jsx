@@ -4,6 +4,8 @@ import Sidebar from '../partials/Sidebar';
 import Search from '../components/Search';
 import Header from '../partials/Header';
 import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
+import useTopGainers from '../utils/hooks/useTopGainers';
+import useTopLosers from '../utils/hooks/useTopLosers';
 
 import StockTable from '../partials/dashboard/StockTable';
 
@@ -12,6 +14,10 @@ import Banner from '../partials/Banner';
 function Dashboard() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const topGainers = useTopGainers();
+  const topLosers = useTopLosers();
+  // const topActive = useTopActive();
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -35,7 +41,16 @@ function Dashboard() {
             <Search />
 
             {/* Cards */}
-            <StockTable />
+            <div className="mb-8">
+              <StockTable title="Top Gainers" data={topGainers} />
+            </div>
+            <div className="mb-8">
+              <StockTable title="Top Losers" data={topLosers} />
+            </div>
+            {/* Uncomment the following lines once you have the useTopActive hook */}
+            {/* <div className="mb-4">
+              <StockTable title="Top Active" data={topActive} />
+            </div> */}
 
           </div>
         </main>

@@ -1,8 +1,7 @@
-// useTopData.js
 import { useEffect, useState } from 'react';
 import fetchTopGainers from '../api/fetchTopGainers';
 
-const useTopData = () => {
+const useTopGainers = () => {
     const [topGainers, setTopGainers] = useState([]);
 
     useEffect(() => {
@@ -21,4 +20,4 @@ const useTopData = () => {
     return topGainers;
 };
 
-export default useTopData;
+export default useTopGainers;
