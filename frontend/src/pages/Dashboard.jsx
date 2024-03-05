@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-import Sidebar from '../partials/Sidebar';
+import Sidebar from '../components/Sidebar';
 import Search from '../components/Search';
-import Header from '../partials/Header';
-import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
+import Header from '../components/Header';
+import WelcomeBanner from '../components/WelcomeBanner';
 import useTopGainers from '../utils/hooks/useTopGainers';
 import useTopLosers from '../utils/hooks/useTopLosers';
 
-import StockTable from '../partials/dashboard/StockTable';
+import StockTable from '../components/StockTable';
 
-import Banner from '../partials/Banner';
+import Banner from '../components/Banner';
 
 function Dashboard() {
 
@@ -40,19 +40,22 @@ function Dashboard() {
             {/* Search */}
             <Search />
 
-            {/* Cards */}
-            <div className="mb-8">
-              <StockTable title="Top Gainers" data={topGainers} />
-            </div>
-            <div className="mb-8">
-              <StockTable title="Top Losers" data={topLosers} />
-            </div>
-            {/* Uncomment the following lines once you have the useTopActive hook */}
-            {/* <div className="mb-4">
+            {/* Stock Card */}
+
+
+              {/* Tables */}
+              <div className="mb-8">
+                <StockTable title="Top Gainers" data={topGainers} />
+              </div>
+              <div className="mb-8">
+                <StockTable title="Top Losers" data={topLosers} />
+              </div>
+              {/* Uncomment the following lines once you have the useTopActive hook */}
+              {/* <div className="mb-4">
               <StockTable title="Top Active" data={topActive} />
             </div> */}
 
-          </div>
+            </div>
         </main>
 
         <Banner />

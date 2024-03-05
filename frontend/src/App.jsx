@@ -7,7 +7,6 @@ import {
 
 import './css/style.css';
 
-// Import pages
 import Dashboard from './pages/Dashboard';
 
 function App() {
