@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Tooltip from '../../components/Tooltip';
-import RealtimeChart from '../../charts/RealtimeChart';
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';

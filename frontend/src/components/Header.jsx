@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import ThemeToggle from '../components/ThemeToggle';
+import ThemeToggle from './ThemeToggle';
 
 function Header({ sidebarOpen, setSidebarOpen }) {
 

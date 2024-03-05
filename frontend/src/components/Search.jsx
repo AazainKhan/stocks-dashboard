@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useCompanySearch from '../utils/hooks/useCompanySearch';
 
 function Search({ setData, setTicker }) {
     const [searchTerm, setSearchTerm] = useState('');
     const companies = useCompanySearch(searchTerm);
     const [selectedCompany, setSelectedCompany] = useState('');
+    const searchRef = useRef();
 
     useEffect(() => {
         if (selectedCompany) {
@@ -13,12 +14,26 @@ function Search({ setData, setTicker }) {
         }
     }, [selectedCompany, setData, setTicker]);
 
+    // Close the list if clicked outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setSearchTerm('');
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     const filteredCompanies = companies.filter(company => 
         company.label.toLowerCase().startsWith(searchTerm.toLowerCase())
     ).slice(0, 10);
 
     return (
-        <form className="max-w-md mx-auto py-10"> 
+        <form className="max-w-md mx-auto py-10" ref={searchRef}> 
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div className="relative">
                 <input 
