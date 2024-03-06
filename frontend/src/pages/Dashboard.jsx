@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import WelcomeBanner from '../components/WelcomeBanner';
 import useTopGainers from '../utils/hooks/useTopGainers';
 import useTopLosers from '../utils/hooks/useTopLosers';
-
+import StockCard from '../components/StockCard';
 import StockTable from '../components/StockTable';
 
 import Banner from '../components/Banner';
@@ -33,29 +33,22 @@ function Dashboard() {
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-
             {/* Welcome banner */}
             <WelcomeBanner />
 
             {/* Search */}
             <Search />
 
-            {/* Stock Card */}
-
-
+            {/* Cards */}
+              {/* Stock Card */}
+              <StockCard />
               {/* Tables */}
-              <div className="mb-8">
-                <StockTable title="Top Gainers" data={topGainers} />
-              </div>
-              <div className="mb-8">
-                <StockTable title="Top Losers" data={topLosers} />
-              </div>
-              {/* Uncomment the following lines once you have the useTopActive hook */}
-              {/* <div className="mb-4">
-              <StockTable title="Top Active" data={topActive} />
-            </div> */}
+              {/* <StockTable title="Top Gainers" data={topGainers} />
+                  
+              <StockTable title="Top Losers" data={topLosers} /> */}
 
-            </div>
+              {/* <StockTable title="Top Active" data={topActive} /> */}
+          </div>
         </main>
 
         <Banner />
