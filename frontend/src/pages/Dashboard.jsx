@@ -43,9 +43,9 @@ function Dashboard() {
               {/* Stock Card */}
               <StockCard />
               {/* Tables */}
-              {/* <StockTable title="Top Gainers" data={topGainers} />
+              <StockTable title="Top Gainers" data={topGainers} />
                   
-              <StockTable title="Top Losers" data={topLosers} /> */}
+              <StockTable title="Top Losers" data={topLosers} />
 
               {/* <StockTable title="Top Active" data={topActive} /> */}
           </div>
