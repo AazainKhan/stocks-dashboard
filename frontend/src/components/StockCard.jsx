@@ -17,13 +17,10 @@ function StockCard({ ticker = 'AMZN' }) {
                 });
                 priceSeries.current.setData(next);
 
+                // Assuming the latest price and change percentage are in the last item
                 const lastItem = data[data.length - 1];
-                const secondLastItem = data[data.length - 2];
-                setLatestPrice(lastItem[1]);
-
-                // change percentage
-                const change = ((lastItem[1] - secondLastItem[1]) / secondLastItem[1]) * 100;
-                setChangePercentage(change.toFixed(2));
+                setLatestPrice(lastItem[1]); // Replace with the actual key for latest price
+                setChangePercentage(lastItem[2]); // Replace with the actual key for change percentage
             });
     };
 
@@ -55,22 +52,22 @@ function StockCard({ ticker = 'AMZN' }) {
         };
     }, [ticker]);
 
-    return (
-        <>
-            <div className="col-span-full xl:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-                <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
-                    <h2 className="font-semibold text-slate-800 dark:text-slate-100">{ticker}</h2>
-                </header>
-                <div className="px-5 py-3">
-                    <div className="flex items-start">
-                        <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">${latestPrice ? latestPrice.toFixed(2) : 'Loading...'}</div>
-                        <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">{changePercentage ? `${changePercentage}%` : 'Loading...'}</div>
-                    </div>
-                    <div ref={chartContainerRef} className="h-64 w-full"></div>
+return (
+    <>
+        <div className="col-span-full xl:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+                <h2 className="font-semibold text-slate-800 dark:text-slate-100">{ticker}</h2>
+            </header>
+            <div className="px-5 py-3">
+                <div className="flex items-start">
+                    <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">${latestPrice ? latestPrice.toFixed(2) : 'Loading...'}</div>
+                    <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">{changePercentage}</div>
                 </div>
+                <div ref={chartContainerRef} className="h-64 w-full"></div>
             </div>
-        </>
-    )
+        </div>
+    </>
+)
 }
 
 export default StockCard;
