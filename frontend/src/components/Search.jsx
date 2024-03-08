@@ -32,8 +32,8 @@ function Search({ setTicker }) {
             }
         };
 
-        searchRef.current.addEventListener('keydown', handleKeyDown);
-        return () => searchRef.current.removeEventListener('keydown', handleKeyDown);
+        searchRef.current && searchRef.current.addEventListener('keydown', handleKeyDown);
+        return () => searchRef.current && searchRef.current.removeEventListener('keydown', handleKeyDown);
     }, [searchTerm, companies, selectedIndex, setTicker]);
 
     useEffect(() => {
@@ -44,14 +44,14 @@ function Search({ setTicker }) {
     useEffect(() => {
         // Detect clicks outside the search component to close the dropdown.
         const handleClickOutside = (event) => {
-            if (!searchRef.current.contains(event.target)) {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
                 setSearchTerm('');
             }
         };
 
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    }, [searchTerm]);
 
     return (
         //set width to be half of the parent container and center it

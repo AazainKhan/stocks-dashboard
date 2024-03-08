@@ -11,6 +11,7 @@ import Banner from '../components/Banner';
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedStock, setSelectedStock] = useState(null); // State to track selected stock
   const [ticker, setTicker] = useState('AAPL'); // Initialize ticker state with 'AAPL'
 
   const topGainers = useTopGainers();
@@ -18,7 +19,8 @@ function Dashboard() {
 
   // Function to update the ticker
   const handleSetTicker = (newTicker) => {
-    setTicker(newTicker);
+    setSelectedStock(newTicker); // Update selected stock
+    setTicker(newTicker); // Update ticker
   };
 
   return (
@@ -39,8 +41,8 @@ function Dashboard() {
             {/* Search */}
             <Search setTicker={handleSetTicker} />
 
-            {/* Stock Card */}
-            <StockCard ticker={ticker}/> {/* Pass the latestPrice and changePercentage as props */}
+            {/* Render Stock Card only if a stock is selected */}
+            {selectedStock && <StockCard ticker={ticker}/>}
 
             {/* Tables */}
             <StockTable title="Top Gainers" data={topGainers} />

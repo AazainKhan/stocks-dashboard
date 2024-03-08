@@ -30,41 +30,49 @@ function StockCard({ ticker }) {
     const tickerData = useTickerData(ticker);
 
     useEffect(() => {
-        if (!chartContainerRef.current || !containerRendered || !priceSeries.length) return;
+        let isMounted = true; // Flag to track whether the component is mounted
+        let chart = null; // Initialize chart variable
 
-        const chart = createChart(chartContainerRef.current, {
-            layout: {
-                background: { type: ColorType.Solid, color: currentTheme === 'dark' ? "#121212" : "white" },
-                textColor: currentTheme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'black',
-            },
-            grid: {
-                vertLines: {
-                    color: currentTheme === 'dark' ? '#242424' : '#f0f0f0',
+        if (chartContainerRef.current && containerRendered && priceSeries.length) {
+            chart = createChart(chartContainerRef.current, {
+                layout: {
+                    background: { type: ColorType.Solid, color: currentTheme === 'dark' ? "#121212" : "white" },
+                    textColor: currentTheme === 'dark' ? 'rgba(255, 255, 255, 0.9)' : 'black',
                 },
-                horzLines: {
-                    color: currentTheme === 'dark' ? '#242424' : '#f0f0f0',
+                grid: {
+                    vertLines: {
+                        color: currentTheme === 'dark' ? '#242424' : '#f0f0f0',
+                    },
+                    horzLines: {
+                        color: currentTheme === 'dark' ? '#242424' : '#f0f0f0',
+                    },
                 },
-            },
-            width: chartContainerRef.current.clientWidth,
-            height: chartContainerRef.current.clientHeight,
-        });
+                width: chartContainerRef.current.clientWidth,
+                height: chartContainerRef.current.clientHeight,
+            });
 
-        const resizeObserver = new ResizeObserver(entries => {
-            const { width, height } = entries[0].contentRect;
-            chart.resize(width, height);
-        });
-        resizeObserver.observe(chartContainerRef.current);
+            const resizeObserver = new ResizeObserver(entries => {
+                if (isMounted) { // Only perform operations on the chart if the component is still mounted
+                    const { width, height } = entries[0].contentRect;
+                    chart.resize(width, height);
+                }
+            });
+            resizeObserver.observe(chartContainerRef.current);
 
-        const priceSeriesInstance = chart.addAreaSeries({
-            lineColor: 'rgba(33, 150, 243, 1)',
-            topColor: 'rgba(33, 150, 243, 0.4)',
-            bottomColor: 'rgba(33, 150, 243, 0)',
-        });
+            const priceSeriesInstance = chart.addAreaSeries({
+                lineColor: 'rgba(33, 150, 243, 1)',
+                topColor: 'rgba(33, 150, 243, 0.4)',
+                bottomColor: 'rgba(33, 150, 243, 0)',
+            });
 
-        priceSeriesInstance.setData(priceSeries);
+            priceSeriesInstance.setData(priceSeries);
+        }
 
         return () => {
-            chart.remove();
+            isMounted = false; // Set the flag to false when the component is unmounted
+            if (chart) {
+                chart.remove(); // Cleanup the chart instance
+            }
         };
     }, [ticker, currentTheme, containerRendered, priceSeries]);
 
