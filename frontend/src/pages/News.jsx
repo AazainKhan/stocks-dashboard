@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import Search from '../components/Search';
 import Header from '../components/Header';
-import StockCard from '../components/StockCard';
 import Banner from '../components/Banner';
-import PredictionBanner from '../components/PredictionBanner';
+import NewsBanner from '../components/NewsBanner';
+import NewsStockCard from '../components/NewsStockCard';
+import NewsSearch from '../components/NewsSearch';
 
-function StockPrediction() {
+function StockNews() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [selectedStock, setSelectedStock] = useState(null); // State to track selected stock
     const [ticker, setTicker] = useState('AAPL'); // Initialize ticker state with 'AAPL'
@@ -29,15 +29,15 @@ function StockPrediction() {
 
                 <main>
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto flex flex-col gap-6">
-                        {/* Prediction banner */}
-                        <PredictionBanner />
+                        {/* News banner */}
+                        <NewsBanner />
 
-                        {/* Search */}
-                        <Search setTicker={handleSetTicker} />
-
-                        {/* Render Stock Card only if a stock is selected */}
-                        {selectedStock && <StockCard ticker={ticker} />}
-
+                        {/* Search bar */}
+                        <div className="relative w-full lg:w-1/2 mx-auto flex flex-col gap-2">
+                        <NewsSearch setTicker={handleSetTicker} />
+                        </div>
+                        {/* Render Stock Card only if a stock is selected, date range selected, and submit button clicked */}
+                        {selectedStock && <NewsStockCard ticker={ticker}/>}
                     </div>
                 </main>
 
@@ -47,4 +47,4 @@ function StockPrediction() {
     );
 }
 
-export default StockPrediction;
+export default StockNews;

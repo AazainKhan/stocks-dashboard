@@ -39,8 +39,9 @@ function Dashboard() {
             <WelcomeBanner />
 
             {/* Search */}
+            <div className="relative w-full lg:w-1/2 mx-auto">
             <Search setTicker={handleSetTicker} />
-
+            </div>
             {/* Render Stock Card only if a stock is selected */}
             {selectedStock && <StockCard ticker={ticker}/>}
 

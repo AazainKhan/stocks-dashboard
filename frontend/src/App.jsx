@@ -8,7 +8,7 @@ import {
 import './css/style.css';
 
 import Dashboard from './pages/Dashboard';
-import StockPrediction from './pages/StockPrediction';
+import News from './pages/News';
 
 function App() {
 
@@ -24,7 +24,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
-        <Route exact path="/stock-prediction" element={<StockPrediction />} />
+        <Route exact path="/news" element={<News />} />
       </Routes>
     </>
   );

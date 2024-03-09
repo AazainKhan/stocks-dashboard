@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useCompanySearch from '../utils/hooks/useCompanySearch';
 
-function Search({ setTicker }) {
+function NewsSearch({ setTicker }) {
     const [searchTerm, setSearchTerm] = useState('');
     const companies = useCompanySearch(searchTerm);
     const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -82,4 +82,4 @@ function Search({ setTicker }) {
     );
 }
 
-export default Search;
+export default NewsSearch;
