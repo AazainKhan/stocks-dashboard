@@ -10,7 +10,7 @@ __pycache__/
 /frontend/node_modules/
 
 # api key
-api.py
+api_key.py
 
 # Distribution / packaging
 .Python
