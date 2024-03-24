@@ -5,6 +5,7 @@ import Banner from '../components/Banner';
 import NewsBanner from '../components/NewsBanner';
 import NewsStockCard from '../components/NewsStockCard';
 import NewsSearch from '../components/NewsSearch';
+import NewsTable from '../components/NewsTable';
 
 function StockNews() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -36,6 +37,7 @@ function StockNews() {
                         <div className="relative w-full lg:w-1/2 mx-auto flex flex-col gap-2">
                         <NewsSearch setTicker={handleSetTicker} />
                         </div>
+                        <NewsTable />
                         {/* Render Stock Card only if a stock is selected, date range selected, and submit button clicked */}
                         {selectedStock && <NewsStockCard ticker={ticker}/>}
                     </div>

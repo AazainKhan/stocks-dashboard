@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 function StockTable({ title, data }) {
-    const [displayCount, setDisplayCount] = useState(10);
+    const [showMore, setShowMore] = useState(false);
+    const displayedRows = showMore ? data.length : 10; // Use this variable directly
 
-    const handleShowMore = () => {
-        setDisplayCount(data.length);
+    const handleShowMoreClick = () => {
+        setShowMore(!showMore);
     };
 
     return (
@@ -29,7 +30,7 @@ function StockTable({ title, data }) {
                             </tr>
                         </thead>
                         <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                            {data.slice(0, displayCount).map((stock, index) => (
+                            {data.slice(0, displayedRows).map((stock, index) => (
                                 <tr key={index}>
                                     <td className="p-2 text-slate-800 dark:text-slate-100">{stock.symbol}</td>
                                     <td className="p-2 text-center text-slate-800 dark:text-slate-100">{stock.price.toFixed(2)}</td>
@@ -41,11 +42,14 @@ function StockTable({ title, data }) {
                         </tbody>
                     </table>
                 </div>
-                {data.length > displayCount && (
-                    <div className="text-center mt-4">
-                        <button className="text-sm text-blue-500 hover:underline" onClick={handleShowMore}>Show More</button>
-                    </div>
-                )}
+                <div className="flex justify-center mt-4">
+                    <button
+                        className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
+                        onClick={handleShowMoreClick}
+                    >
+                        {showMore ? 'Show Less' : 'Show More'}
+                    </button>
+                </div>
             </div>
         </div>
     );

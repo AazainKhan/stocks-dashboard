@@ -2,34 +2,18 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useThemeProvider } from '../utils/ThemeContext';
 import { createChart, ColorType } from 'lightweight-charts';
 import useHistoricalData from '../utils/hooks/useHistoricalData';
+import useTickerNews from '../utils/hooks/useTickerNews'; // Import the custom hook
 
-function formatNumberWithSuffix(num) {
-    const suffixes = ['', 'K', 'M', 'B', 'T'];
-    const tier = Math.log10(Math.abs(num)) / 3 | 0;
-    if (tier === 0) return num;
-    const suffix = suffixes[tier];
-    const scale = Math.pow(10, tier * 3);
-    const scaled = num / scale;
-    return scaled.toFixed(2) + suffix;
-}
-
-function formatPEratio(peRatio) {
-    return isNaN(peRatio) ? "—" : peRatio.toFixed(2);
-}
-
-function formatYield(yieldValue) {
-    return isNaN(yieldValue) ? "—" : (yieldValue * 100).toFixed(2) + '%';
-}
-
-function NewsCard({ ticker }) {
+function NewsStockCard({ ticker }) {
     const chartContainerRef = useRef();
     const [containerRendered, setContainerRendered] = useState(false);
+    const news = useTickerNews(ticker); // Use the custom hook to get news data
     const { currentTheme } = useThemeProvider();
     const { latestPrice, changePercentage, priceSeries } = useHistoricalData(ticker);
 
     useEffect(() => {
-        let isMounted = true; // Flag to track whether the component is mounted
-        let chart = null; // Initialize chart variable
+        let isMounted = true;
+        let chart = null;
 
         if (chartContainerRef.current && containerRendered && priceSeries.length) {
             chart = createChart(chartContainerRef.current, {
@@ -50,7 +34,7 @@ function NewsCard({ ticker }) {
             });
 
             const resizeObserver = new ResizeObserver(entries => {
-                if (isMounted) { // Only perform operations on the chart if the component is still mounted
+                if (isMounted) {
                     const { width, height } = entries[0].contentRect;
                     chart.resize(width, height);
                 }
@@ -67,9 +51,9 @@ function NewsCard({ ticker }) {
         }
 
         return () => {
-            isMounted = false; // Set the flag to false when the component is unmounted
+            isMounted = false;
             if (chart) {
-                chart.remove(); // Cleanup the chart instance
+                chart.remove();
             }
         };
     }, [ticker, currentTheme, containerRendered, priceSeries]);
@@ -93,12 +77,36 @@ function NewsCard({ ticker }) {
                     </div>
                     <div ref={chartContainerRef} className="h-64 w-full"></div>
                     <div>
-                        Financial News for {ticker}    
-                    </div>'
+                        <h3>Financial News for {ticker}</h3>
+                        <div className="overflow-x-auto">
+                            <table className="table-auto w-full dark:text-slate-300">
+                                <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50">
+                                    <tr>
+                                        <th className="p-2">
+                                            <div className="font-semibold text-left">Date</div>
+                                        </th>
+                                        <th className="p-2">
+                                            <div className="font-semibold text-left">Headline</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                                    {news.map((item, index) => (
+                                        <tr key={index}>
+                                            <td className="p-2 text-slate-800 dark:text-slate-100">{item.datetime}</td>
+                                            <td className="p-2 text-slate-800 dark:text-slate-100">
+                                                <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{item.headline}</a>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
     );
 }
 
-export default NewsCard;
+export default NewsStockCard;

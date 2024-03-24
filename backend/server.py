@@ -1,4 +1,7 @@
-from flask import Flask, make_response, jsonify
+from flask import jsonify
+from pyfinviz.news import News
+from bs4 import BeautifulSoup
+from flask import Flask, make_response, jsonify, request
 import yfinance as yf
 import pandas as pd
 import json
@@ -20,7 +23,6 @@ companies = [{'value': df['Symbol'][x], 'label': df['Security'][x]}
 @app.route('/companies')
 def companyList():
     return companies, {'Access-Control-Allow-Origin': '*'}
-
 
 
 @app.route('/top-gainers')
@@ -68,8 +70,6 @@ def ticker(ticker):
     return response, {'Access-Control-Allow-Origin': '*'}
 
 
-from flask import jsonify
-
 @app.route('/historical/<ticker>')
 def history(ticker):
 
@@ -82,12 +82,45 @@ def history(ticker):
     # convert to unix timestamp in seconds and then to list
     timestamps = (date_index.astype(int)/1000000000).tolist()
 
-    data = [list(x) for x in zip(timestamps, historical_prices["Close"].tolist())]
+    data = [list(x)
+            for x in zip(timestamps, historical_prices["Close"].tolist())]
     response = jsonify(data)
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
 
+
+@app.route('/news/<ticker>')
+def get_news(ticker):
+    url = f'https://finviz.com/quote.ashx?t={ticker}'
+    headers = {'user-agent': 'news_scraper'}
+    response = requests.get(url, headers=headers)
+
+    soup = BeautifulSoup(response.content, 'html.parser')
+    finviz_news_table = soup.find(id='news-table')
+
+    news_data = []
+
+    for news_item in finviz_news_table.findAll('tr'):
+        datetime_info = news_item.find('td').text.strip()  # Date and time
+        headline_info = news_item.a.text.strip()           # Headline
+        link_info = news_item.a['href']                    # Link to the news
+
+        news_data.append({
+            "datetime": datetime_info,
+            "headline": headline_info,
+            "link": link_info
+        })
+
+    # Return the news data as JSON with CORS headers
+    return jsonify(news_data), {'Access-Control-Allow-Origin': '*'}
+
+
+@app.route('/news')
+def get_all_news():
+    news = News()
+    news_data = news.news_df.to_json(orient='records')
+    return jsonify(news_data), {'Access-Control-Allow-Origin': '*'}
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True, use_reloader=True)
