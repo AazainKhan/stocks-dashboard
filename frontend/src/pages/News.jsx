@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import Banner from '../components/Banner';
-import NewsBanner from '../components/NewsBanner';
 import NewsStockCard from '../components/NewsStockCard';
 import NewsSearch from '../components/NewsSearch';
 import NewsTable from '../components/NewsTable';
@@ -30,16 +29,13 @@ function StockNews() {
 
                 <main>
                     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto flex flex-col gap-6">
-                        {/* News banner */}
-                        <NewsBanner />
-
                         {/* Search bar */}
                         <div className="relative w-full lg:w-1/2 mx-auto flex flex-col gap-2">
-                        <NewsSearch setTicker={handleSetTicker} />
+                            <NewsSearch setTicker={handleSetTicker} />
                         </div>
-                        <NewsTable />
                         {/* Render Stock Card only if a stock is selected, date range selected, and submit button clicked */}
-                        {selectedStock && <NewsStockCard ticker={ticker}/>}
+                        {selectedStock && <NewsStockCard ticker={ticker} />}
+                        <NewsTable />
                     </div>
                 </main>
 

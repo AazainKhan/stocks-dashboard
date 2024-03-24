@@ -25,38 +25,38 @@ def companyList():
     return companies, {'Access-Control-Allow-Origin': '*'}
 
 
-@app.route('/top-gainers')
-def top_gainers():
-    # insert api key from api.py
-    url = f"https://financialmodelingprep.com/api/v3/stock_market/gainers?apikey={apikey}"
-    top_gainers = requests.get(url).json()
-    gainerInfo = json.dumps(top_gainers)
+# @app.route('/top-gainers')
+# def top_gainers():
+#     # insert api key from api.py
+#     url = f"https://financialmodelingprep.com/api/v3/stock_market/gainers?apikey={apikey}"
+#     top_gainers = requests.get(url).json()
+#     gainerInfo = json.dumps(top_gainers)
 
-    response = make_response(gainerInfo)
+#     response = make_response(gainerInfo)
 
-    return response, {'Access-Control-Allow-Origin': '*'}
-
-
-@app.route('/top-losers')
-def top_losers():
-    url = f"https://financialmodelingprep.com/api/v3/stock_market/losers?apikey={apikey}"
-    top_losers = requests.get(url).json()
-    loserInfo = json.dumps(top_losers)
-
-    response = make_response(loserInfo)
-
-    return response, {'Access-Control-Allow-Origin': '*'}
+#     return response, {'Access-Control-Allow-Origin': '*'}
 
 
-@app.route('/top-active')
-def top_active():
-    url = "https://financialmodelingprep.com/api/v3/stock_market/losers?apikey=VNUrWHh03OUNyt5Fc9TnXZE72DKUBHXi"
-    top_active = requests.get(url).json()
-    activeInfo = json.dumps(top_active)
+# @app.route('/top-losers')
+# def top_losers():
+#     url = f"https://financialmodelingprep.com/api/v3/stock_market/losers?apikey={apikey}"
+#     top_losers = requests.get(url).json()
+#     loserInfo = json.dumps(top_losers)
 
-    response = make_response(activeInfo)
+#     response = make_response(loserInfo)
 
-    return response, {'Access-Control-Allow-Origin': '*'}
+#     return response, {'Access-Control-Allow-Origin': '*'}
+
+
+# @app.route('/top-active')
+# def top_active():
+#     url = "https://financialmodelingprep.com/api/v3/stock_market/losers?apikey=VNUrWHh03OUNyt5Fc9TnXZE72DKUBHXi"
+#     top_active = requests.get(url).json()
+#     activeInfo = json.dumps(top_active)
+
+#     response = make_response(activeInfo)
+
+#     return response, {'Access-Control-Allow-Origin': '*'}
 
 
 @app.route('/<ticker>')

@@ -30,7 +30,7 @@ const NewsTable = () => {
     return (
         <div className="col-span-full xl:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
             <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
-                <h2 className="font-semibold text-slate-800 dark:text-slate-100">Latest News</h2>
+                <h2 className="font-semibold text-slate-800 dark:text-slate-100">News</h2>
             </header>
             <div className="px-5 py-4">
                 <div className="overflow-x-auto">
@@ -38,7 +38,7 @@ const NewsTable = () => {
                         <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50">
                             <tr>
                                 <th className="p-2">
-                                    <div className="font-semibold text-left">Time</div>
+                                    <div className="font-semibold text-left">Date/Time</div>
                                 </th>
                                 <th className="p-2">
                                     <div className="font-semibold text-left">Headline</div>
@@ -64,7 +64,7 @@ const NewsTable = () => {
                         className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                         onClick={handleShowMoreClick}
                     >
-                        {showMore ? 'Show Less' : 'Show More'}
+                        {showMore ? 'Show less' : 'Show more'}
                     </button>
                 </div>
             </div> 

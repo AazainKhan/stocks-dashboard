@@ -28,6 +28,7 @@ function StockCard({ ticker }) {
     const { currentTheme } = useThemeProvider();
     const { latestPrice, changePercentage, priceSeries } = useHistoricalData(ticker);
     const tickerData = useTickerData(ticker);
+    const [showFullSummary, setShowFullSummary] = useState(false);
 
     useEffect(() => {
         let isMounted = true; // Flag to track whether the component is mounted
@@ -82,6 +83,33 @@ function StockCard({ ticker }) {
         }
     }, []);
 
+    const toggleSummaryDisplay = () => {
+        setShowFullSummary(!showFullSummary);
+    };
+
+    const renderBusinessSummary = () => {
+        if (!tickerData) return 'Loading...';
+
+        const { businessSummary } = tickerData;
+
+        // Split the business summary into sentences
+        const sentences = businessSummary.split('. ');
+
+        if (sentences.length <= 4 || showFullSummary) {
+            return businessSummary;
+        } else {
+            const summary = sentences.slice(0, 4).join('. ') + '.';
+            return (
+                <>
+                    {summary}{' '}
+                    <button className="text-blue-500 underline" onClick={toggleSummaryDisplay}>
+                        Read More
+                    </button>
+                </>
+            );
+        }
+    };
+
     return (
         <>
             <div className="col-span-full xl:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
@@ -91,11 +119,11 @@ function StockCard({ ticker }) {
                 <div className="px-5 py-4 space-y-4">
                     <div className="flex items-start">
                         <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">${latestPrice ? latestPrice.toFixed(2) : 'Loading...'}</div>
-                        <div className={`text-sm font-semibold text-white px-1.5 rounded-full ${changePercentage > 0 ? 'bg-emerald-500' : 'bg-amber-500'}`}>{changePercentage}</div>
+                        <div className={`text-sm font-semibold text-white px-1.5 rounded-full ${changePercentage > 0 ? 'bg-emerald-500' : 'bg-amber-500'}`}>{changePercentage > 0 ? '+' : ''}{changePercentage}%</div>
                     </div>
                     <div ref={chartContainerRef} className="h-64 w-full"></div>
                     <h3 className="font-semibold text-slate-800 dark:text-slate-100">About {ticker}</h3>
-                    <div>{tickerData ? tickerData.businessSummary : 'Loading...'}</div>
+                    <div>{renderBusinessSummary()}</div>
 
                     <h3 className="font-semibold text-slate-800 dark:text-slate-100">Market details</h3>
 

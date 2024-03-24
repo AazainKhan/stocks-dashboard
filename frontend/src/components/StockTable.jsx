@@ -44,10 +44,10 @@ function StockTable({ title, data }) {
                 </div>
                 <div className="flex justify-center mt-4">
                     <button
-                        className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
+                        className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                         onClick={handleShowMoreClick}
                     >
-                        {showMore ? 'Show Less' : 'Show More'}
+                        {showMore ? 'SHOW LESS' : 'Show more'}
                     </button>
                 </div>
             </div>
