@@ -1,4 +1,3 @@
-// fetchHistoricalData.js
 const fetchHistoricalData = async (ticker) => {
     try {
         const response = await fetch(`http://localhost:5000/historical/${ticker}`);

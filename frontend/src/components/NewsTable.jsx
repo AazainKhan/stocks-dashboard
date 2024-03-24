@@ -1,30 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import useNews from '../utils/hooks/useNews';
 
 const NewsTable = () => {
-    const [news, setNews] = useState([]);
+    const news = useNews();
     const [showMore, setShowMore] = useState(false);
     const [displayedRows, setDisplayedRows] = useState(10);
 
-    useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/news');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setNews(JSON.parse(data)); // Adjust based on the actual format of the response
-            } catch (error) {
-                console.error('There has been a problem with your fetch operation:', error);
-            }
-        };
-
-        fetchNews();
-    }, []);
-
     const handleShowMoreClick = () => {
         setShowMore(!showMore);
-        setDisplayedRows(showMore ? 10 : news.length); 
+        setDisplayedRows(showMore ? 10 : news.length);
     };
 
     return (
@@ -59,15 +43,15 @@ const NewsTable = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="text-center mt-4"> 
-                    <button 
+                <div className="text-center mt-4">
+                    <button
                         className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                         onClick={handleShowMoreClick}
                     >
                         {showMore ? 'Show less' : 'Show more'}
                     </button>
                 </div>
-            </div> 
+            </div>
         </div>
     );
 };

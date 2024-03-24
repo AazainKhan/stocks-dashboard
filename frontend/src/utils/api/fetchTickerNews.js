@@ -1,5 +1,3 @@
-// /frontend/utils/api/fetchTickerNews.js
-
 const BACKEND_URL = 'http://localhost:5000';
 
 export async function fetchTickerNews(ticker) {
